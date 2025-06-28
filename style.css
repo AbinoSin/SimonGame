@@ -1,0 +1,75 @@
+/* Initial setup */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: rgb(20, 20, 35);
+  color: white;
+}
+
+/* setting canvas */
+.preinfo {
+  margin: 20px 0 0 0;
+  text-align: center;
+  height: 80px;
+}
+
+/* styling pre info */
+.preinfo p {
+  margin: 15px;
+  font-weight: 550;
+  letter-spacing: 1px;
+  padding: 0 6px 0 6px;
+}
+.preinfo button {
+  background-color: rgb(36, 36, 36);
+  color: white;
+  padding: 3px 6px 3px 6px;
+  border-radius: 10px;
+  border: rgb(98, 122, 130) 2px solid;
+}
+
+/* main game */
+.btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn {
+  height: 150px;
+  width: 150px;
+  border: 7px solid rgb(225, 225, 225);
+  margin: 20px 0;
+  border-radius: 30%;
+}
+
+.btn-line {
+  margin: 0 10px;
+}
+
+#btn1 {
+  background-color: rgb(255, 39, 93);
+}
+#btn2 {
+  background-color: rgb(65, 189, 255);
+}
+#btn3 {
+  background-color: rgb(255, 153, 64);
+}
+#btn4 {
+  background-color: rgb(115, 138, 255);
+}
+
+/* score board */
+#score {
+  height: 100px;
+  width: 350px;
+  text-align: center;
+  padding: 25px;
+  margin: auto;
+}
