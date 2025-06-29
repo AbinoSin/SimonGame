@@ -1,62 +1,102 @@
-const gameSeq = [];
-const userSeq = [];
+let gameSeq = [];
+let userSeq = [];
 
-let started = false;
+let gameStatus = false;
 let level = 0;
 
-let test = document.querySelectorAll(".btn");
+let i = 0;
 
-document
-  .querySelector(".preinfo p button")
-  .addEventListener("click", function () {
-    if (started == false) {
-      started = true;
-      console.log("game is started");
-      document.querySelector(".preinfo p").innerHTML = "Game is started !!";
-      levelUp();
-    }
+//--- staring game ---------------------------------------------
+let startBtn = document.querySelector(".preinfo p button");
+startBtn.addEventListener("click", function () {
+  gameStatus = true;
+  levelUp();
+  let lights = document.querySelectorAll(".btn");
+  lights.forEach(function (element) {
+    element.addEventListener("click", function () {
+      this.classList.add("greenFlash");
+      setTimeout(() => {
+        this.classList.remove("greenFlash");
+      }, 250);
+
+      userSeq.push(element.getAttribute("id"));
+      console.log(userSeq);
+      checkGame();
+    });
   });
+});
 
+//--- functions ------------------------------------------------
+//--- levelUp -------------
 function levelUp() {
+  userSeq = [];
   level++;
-  document.querySelector(".preinfo p").innerHTML = `LEVEL <b>${level}</b>`;
-  btnFlashAll(test);
+
+  console.log(gameStatus);
+
+  let levelScore = document.querySelector(".levelScore");
+  levelScore.innerHTML = `<i>LEVEL ${level}</i>`;
+
+  openingFlash();
+  randomFlash();
 }
 
-function btnFlashAll(pBtn) {
-  for (item of pBtn) {
-    item.classList.add("flash");
-  }
-  setTimeout(() => {
-    pBtn[0].classList.remove("flash");
+//--- openingFlash --------
+function openingFlash() {
+  let btns = document.querySelectorAll(".btn");
+  setTimeout(function () {
+    btns.forEach(function (element) {
+      element.classList.add("flash");
+    });
+  }, 0);
+
+  setTimeout(function () {
+    btns.forEach(function (element) {
+      element.classList.remove("flash");
+    });
   }, 500);
-  setTimeout(() => {
-    pBtn[2].classList.remove("flash");
+  setTimeout(function () {
+    btns.forEach(function (element) {
+      element.classList.add("flash");
+    });
   }, 1000);
-  setTimeout(() => {
-    pBtn[3].classList.remove("flash");
+  setTimeout(function () {
+    btns.forEach(function (element) {
+      element.classList.remove("flash");
+    });
   }, 1500);
-  setTimeout(() => {
-    pBtn[1].classList.remove("flash");
+}
+
+//--- randomFlash ---------
+function randomFlash() {
+  const lights = ["red", "yellow", "blue", "purple"];
+  let randomIdx = Math.floor(Math.random() * 4);
+  let randomLight = document.querySelector(`#${lights[randomIdx]}`);
+
+  setTimeout(function () {
+    randomLight.classList.add("flash");
+    gameSeq.push(lights[randomIdx]);
   }, 2000);
-  setTimeout(() => {
-    pBtn.forEach((element) => {
-      element.classList.add("flash");
-    });
+  setTimeout(function () {
+    randomLight.classList.remove("flash");
   }, 2500);
-  setTimeout(() => {
-    pBtn.forEach((element) => {
-      element.classList.remove("flash");
+}
+
+function checkGame() {
+  let i = 0;
+  if (gameSeq[i] === userSeq[i]) {
+    i++;
+    if (gameSeq.length === userSeq.length) {
+      setTimeout(levelUp, 750);
+      i = 0;
+    }
+  } else {
+    document.querySelector(".levelScore").innerText = "You Lost !!";
+    document.querySelectorAll(".btn").forEach(function (element) {
+      element.classList.add("redFlash");
     });
-  }, 3000);
-  setTimeout(() => {
-    pBtn.forEach((element) => {
-      element.classList.add("flash");
-    });
-  }, 3500);
-  setTimeout(() => {
-    pBtn.forEach((element) => {
-      element.classList.remove("flash");
-    });
-  }, 4000);
+    level = 0;
+    gameSeq = [];
+    gameStatus = false;
+  }
 }
